@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+    <head>
+        <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.0/chart.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.js"></script>-->
+    </head>
+
+    <body>
+        <div style="position: absolute; left:1000px; width: 500px; height: 500px;">
+            <canvas id="chartt"></canvas>
+        </div>
+
+        <div style="position: absolute; left:500px; width: 500px; height: 500px;">
+          <canvas id="chartt2"></canvas>
+        </div>
+
+        <div style="position: absolute; top: 600px; left:500px; width: 500px; height: 500px;">
+          <canvas id="chartt3"></canvas>
+        </div>
+
+        <div style="position: absolute; top: 400px; left:1000px; width: 500px; height: 500px;">
+          <canvas id="chartt4"></canvas>
+        </div>
+             
+        <script>
+                const ctx = document.getElementById('chartt').getContext('2d');
+                const ctx2 = document.getElementById('chartt2').getContext('2d');
+                const ctx3 = document.getElementById('chartt3').getContext('2d');
+                const ctx4 = document.getElementById('chartt4').getContext('2d');
+                              
+                const options = {
+                  type: 'line',
+                  data: {
+                        labels: ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO"],
+                        datasets: [{
+                            label: 'MANTTO`S CRITICOS',
+                            data: [2, 4, 1, 1, 5, 3],
+                            backgroundColor: 'rgb(255, 26, 26, 0.1)',
+                            borderColor: 'rgb(255, 26, 26)',
+                            fill: true,
+                            lineTension:0.4,
+                        },
+                        {
+                            label: 'MANTTO`S PREVENTIVOS',
+                            data: [1, 1, 2, 0, 2, 1],
+                            borderColor: 'rgb(0, 153, 255)',
+                            backgroundColor: 'rgb(0, 153, 255, 0.1)',
+                            fill: true,
+                            lineTension:0.4,
+                        }
+                        ]
+                  },
+                  options: {
+                    plugins: {
+                      customPlugin: {
+                        consoleText: 'testText'
+                      }
+                    },
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    },
+                    pointBackgroundColor: '#fff',
+                    radius:10,
+                    interaction:{
+                      intersect:false,
+                    }
+                  },
+                  plugins: [{
+                    id: 'customPlugin',
+                    beforeDatasetsDraw: (chart, args, options) => {
+                      chart.options.plugins.filler.drawTime = 'beforeDatasetsDraw';
+                      chart.update();
+                    }
+                  }]
+                }
+
+                const options2 = {
+                  type: 'doughnut',
+                  data: {
+                        labels: ["DESALINEACION", "SOBRECARGA", "DESGASTE DE RODAMIENTOS", "DESBALANCEO", "PICOS DE TENSION", "DESEQUILIBRIO DE FASES"],
+                        datasets: [{
+                            label: 'DEFECTOS MAS COMUNES',
+                            data: [20, 50, 60, 15, 22, 3],
+                            backgroundColor: ['rgb(0, 204, 102)','rgb(255, 219, 77)','rgb(255, 163, 26)','rgb(255, 51, 51)','rgb(219, 112, 184)','rgb(179, 128, 255)'],
+                            borderColor: 'rgb(0, 0, 0)',
+                            //fill: true,
+                            //lineTension:0.4,
+                        }],
+                  },
+                  options: {
+                    responsive: true,
+                    plugins: {
+                      legend:{
+                        position: 'top',
+                      },
+                      title: {
+                        display:true,
+                        text: 'DEFECTOS MAS COMUNES'
+                      }
+                    },
+                  },
+                }
+                
+                const options3 = {
+                  type: 'bar',
+                  data: {
+                        labels: ["SEMANA 1","SEMANA 2","SEMANA 3","SEMANA 4","SEMANA 5"],
+                        datasets: [{
+                            label: 'INERCIA',
+                            data: [20, 50, -60, 15, -22, ],
+                            backgroundColor: ['rgb(0, 204, 102)'],
+                            borderColor: 'rgb(0, 204, 102)',
+                            //fill: true,
+                            //lineTension:0.4,
+                        },
+                        {
+                            label: 'ROTACION',
+                            data: [10, 61, -32, 12, -2, 71],
+                            borderColor: 'rgb(255, 26, 26)',
+                            backgroundColor: 'rgb(255, 26, 26)',
+                            //fill: true,
+                            //lineTension:0.4,
+                        }
+                      ],
+                  },
+                  options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    elements: {
+                        bar: {
+                          borderWidth: 2,
+                        }
+                    },    
+                    plugins: {
+                      legend:{
+                        position: 'top',
+                      },
+                      title: {
+                        display:true,
+                        text: 'RENDIMIENTO'
+                      }
+                    },
+                  },
+                }
+                
+                const options4 = {
+                  type: 'radar',
+                  data: {
+                        labels: ["1000","3000","6000","9000","12000","15000","18000","21000"],
+                        datasets: [{
+                            label: 'AXIAL',
+                            data: [6521,7654,8131,9465,9873,8128,10645,12131],
+                            backgroundColor: ['rgb(0, 71, 179,0.1)'],
+                            borderColor: 'rgb(0, 71, 179)',
+                            //fill: true,
+                            //lineTension:0.4,
+                        },
+                        {
+                            label: 'VERTICAL',
+                            data: [15464,17964,17845,18524,19543,19244,20632,21650],
+                            borderColor: 'rgb(204, 0, 0)',
+                            backgroundColor: 'rgb(204, 0, 0,0.1))',
+                            fill: '-1',
+                            //lineTension:0.4,
+                        },
+                        {
+                            label: 'HORIZONTAL',
+                            data: [21320,20654,21244,20125,21055,19656,19534,21875],
+                            borderColor: 'rgb(51, 187, 255)',
+                            backgroundColor: 'rgb(51, 187, 255,0.1)',
+                            fill: '1',
+                            //lineTension:0.4,
+                        }
+                      ],
+                  },
+                  options: {
+                    plugins: {
+                      filler: {
+                        propagate: false
+                      },
+                      'samples-filler-analyser': {
+                        target: 'chart-analyser'
+                      },
+                      legend:{
+                        position: 'top',
+                      },
+                      title: {
+                        display:true,
+                        text: 'ESPECTRO DE VELOCIDAD-PICO/VELOCIDAD RMS'
+                      }
+                    },
+                    interaction: {
+                      intersect: false
+                    }
+                  },
+                }  
+
+              const chartt = new Chart(ctx,options);
+              const chartt2 = new Chart(ctx2,options2);
+              const chartt3 = new Chart(ctx3,options3);
+              const chartt4 = new Chart(ctx4,options4);
+
+        </script>
+    </body>
+</html>
